@@ -10,11 +10,14 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -30,6 +33,10 @@ public class LonelyTwitterActivity extends Activity {
 	private EditText bodyText;
 	private ListView oldTweetsList;
 
+
+	private List<BaseMood> moods = new ArrayList<BaseMood>();
+
+
 	private ArrayList<Tweet> tweets = new ArrayList<Tweet>();
 	private ArrayAdapter<Tweet> adapter;
 	
@@ -39,8 +46,13 @@ public class LonelyTwitterActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 
+		moods.add(new GoodMood(Calendar.getInstance().getTime()));
+		moods.add(new BadMood(Calendar.getInstance().getTime()));
+		moods.add(new NoMood(Calendar.getInstance().getTime()));
+
 		bodyText = (EditText) findViewById(R.id.body);
 		Button saveButton = (Button) findViewById(R.id.save);
+        Button clearButton = (Button) findViewById(R.id.clear);
 		oldTweetsList = (ListView) findViewById(R.id.oldTweetsList);
 
 		saveButton.setOnClickListener(new View.OnClickListener() {
@@ -59,6 +71,14 @@ public class LonelyTwitterActivity extends Activity {
 
 			}
 		});
+
+        clearButton.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v) {
+                tweets.clear();
+                adapter.notifyDataSetChanged();
+                saveInFile();
+            }
+        });
 	}
 
 	@Override
