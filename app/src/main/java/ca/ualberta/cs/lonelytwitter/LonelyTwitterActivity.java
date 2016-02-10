@@ -16,6 +16,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -43,6 +44,15 @@ public class LonelyTwitterActivity extends Activity {
 
 
 	private ArrayList<Tweet> tweets = new ArrayList<Tweet>();
+
+	public ArrayAdapter<Tweet> getAdapter() {
+		return adapter;
+	}
+
+	public void setAdapter(ArrayAdapter<Tweet> adapter) {
+		this.adapter = adapter;
+	}
+
 	private ArrayAdapter<Tweet> adapter;
 	
 	/** Called when the activity is first created. */
@@ -74,6 +84,11 @@ public class LonelyTwitterActivity extends Activity {
 				//saveInFile(text, new Date(System.currentTimeMillis()));
 				//finish();
 
+				//
+				//
+
+				//
+				//
 			}
 		});
 
