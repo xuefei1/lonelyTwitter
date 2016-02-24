@@ -87,7 +87,7 @@ public class ElasticsearchTweetController {
 
                 String query = "{\n" +
                         "    \"query\": {\n" +
-                        "                \"term\" : { \"message\" : \""+patterns[i]+"\" }\n" +
+                        "                \"match\" : { \"message\" : \""+patterns[i]+"\" }\n" +
                         "            }\n" +
                         "}";
                 Search search = new Search.Builder(query)
