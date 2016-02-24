@@ -51,13 +51,13 @@ public class LonelyTwitterActivity extends Activity {
 
             public void onClick(View v) {
                 String text = bodyText.getText().toString();
-                Tweet latestTweet = new NormalTweet(text);
+                NormalTweet latestTweet = new NormalTweet(text);
 
                 tweets.add(latestTweet);
                 adapter.notifyDataSetChanged();
 
                 // TODO: Replace with Elasticsearch
-                saveInFile();
+                new ElasticsearchTweetController.AddTweetTask().execute(latestTweet);
 
                 setResult(RESULT_OK);
             }
@@ -70,8 +70,13 @@ public class LonelyTwitterActivity extends Activity {
 
         // Get latest tweets
         // TODO: Replace with Elasticsearch
-        loadFromFile();
-
+        ElasticsearchTweetController.SearchTweetTask searchTweetsTask =  new ElasticsearchTweetController.SearchTweetTask();
+        try {
+            searchTweetsTask.execute("howdy");
+            tweets = searchTweetsTask.get();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         // Binds tweet list with view, so when our array updates, the view updates with it
         adapter = new ArrayAdapter<Tweet>(this, R.layout.list_item, tweets);
         oldTweetsList.setAdapter(adapter);
