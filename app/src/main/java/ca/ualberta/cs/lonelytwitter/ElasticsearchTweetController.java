@@ -15,6 +15,7 @@ import io.searchbox.core.DocumentResult;
 import io.searchbox.core.Index;
 import io.searchbox.core.Search;
 import io.searchbox.core.SearchResult;
+import io.searchbox.core.search.sort.Sort;
 
 /**
  * Created by esports on 2/17/16.
@@ -45,14 +46,18 @@ public class ElasticsearchTweetController {
 
             /* NEW! */
             String search_string;
+            Search search;
             if(params[0] == "") {
+                Sort sort = new Sort("date", Sort.Sorting.DESC);
                 search_string = "{\"from\":0,\"size\":10000}";
+                search = new Search.Builder(search_string).addIndex("testing").addType("tweet").addSort(sort).build();
             } else {
                 // The following gets the top 10000 tweets matching the string passed in
                 search_string = "{\"from\":0,\"size\":10000,\"query\":{\"match\":{\"message\":\"" + params[0] + "\"}}}";
+                search = new Search.Builder(search_string).addIndex("testing").addType("tweet").build();
             }
 
-            Search search = new Search.Builder(search_string).addIndex("testing").addType("tweet").build();
+
             try {
                 SearchResult execute = client.execute(search);
                 if(execute.isSucceeded()) {
