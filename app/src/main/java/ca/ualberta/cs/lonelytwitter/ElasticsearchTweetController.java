@@ -17,7 +17,12 @@ import io.searchbox.core.Search;
 import io.searchbox.core.SearchResult;
 
 /**
- * Created by esports on 2/17/16.
+ * Refactor lab:
+ * Not using default file template
+ * Class ElasticsearchTweetController
+ * handles elastic search
+ * @author xuefei1
+ * @since 1.0
  */
 public class ElasticsearchTweetController {
     private static JestDroidClient client;
@@ -45,7 +50,9 @@ public class ElasticsearchTweetController {
 
             /* NEW! */
             String search_string;
-            if(params[0] == "") {
+
+            //Refactor Lab: Use == instead of equals, fixed
+            if(params[0].equals("")) {
                 search_string = "{\"from\":0,\"size\":10000, \"sort\": {\"date\": {\"order\": \"desc\"}}}";
             } else {
                 // The following gets the top 10000 tweets matching the string passed in

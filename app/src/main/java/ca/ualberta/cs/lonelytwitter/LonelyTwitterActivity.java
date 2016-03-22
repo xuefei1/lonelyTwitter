@@ -21,10 +21,12 @@ public class LonelyTwitterActivity extends Activity {
     private ListView oldTweetsList;
 
     private TweetList myTweets;
-    private ArrayList<Tweet> tweets;
+    //Refactor lab: tweets could be made local
+    //private ArrayList<Tweet> tweets;
     private ArrayAdapter<Tweet> adapter;
 
-    private Button saveButton;
+    //Refactor lab: Button could be made local
+    //private Button saveButton;
 
     public ArrayAdapter<Tweet> getAdapter() {
         return adapter;
@@ -58,7 +60,7 @@ public class LonelyTwitterActivity extends Activity {
                 }
             }
         });
-
+        Button saveButton;
         saveButton = (Button) findViewById(R.id.saveButton);
         saveButton.setOnClickListener(new View.OnClickListener() {
 
@@ -97,6 +99,7 @@ public class LonelyTwitterActivity extends Activity {
 //        getTweetsTask.execute("test");
         getTweetsTask.execute("");
         try {
+            ArrayList<Tweet> tweets;
             tweets = new ArrayList<Tweet>();
             tweets.addAll(getTweetsTask.get());
             myTweets = new TweetList(tweets);
